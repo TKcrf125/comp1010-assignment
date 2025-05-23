@@ -14,7 +14,6 @@ import java.util.List;
 /**
  * Core game logic and flow control.
  */
-// NOTE: AI-generated flow—please adjust method comments.
 public class GameEngine {
     private final ConsoleUI ui;
     private final List<Integer> pastScores = new ArrayList<>();
@@ -30,27 +29,45 @@ public class GameEngine {
         while (true) {
             ui.showMainMenu();
             switch (ui.promptMenuChoice()) {
-                case 1: playGame();   break;
-                case 2: showTutorial(); break;
-                case 3: ui.displayScores(pastScores); break;
-                case 0: saveScores(); return;
+                case 1:
+                    playGame();
+                    break;
+                case 2:
+                    showTutorial();
+                    break;
+                case 3:
+                    ui.displayScores(pastScores);
+                    break;
+                case 0:
+                    saveScores();
+                    return;
             }
         }
     }
 
+    /** Interactive tutorial: choose a step or go back. */
     private void showTutorial() {
         List<String> steps = List.of(
-            "1. Select your unit.",
-            "2. Choose action: Attack or Defend.",
-            "3. Defeat all enemy units."
+            "Step 1: Select your unit and enter the battlefield.",
+            "Step 2: Each turn, choose 'Attack' to damage the enemy or 'Defend' to brace.",
+            "Step 3: Reduce all enemy unit health to zero to win."
         );
-        ui.displayTutorial(steps);
+        while (true) {
+            ui.showTutorialMenu(steps);
+            int choice = ui.promptTutorialChoice(steps.size());
+            if (choice == 0) {
+                break;
+            } else {
+                ui.displayTutorialStep(steps.get(choice - 1));
+            }
+        }
     }
 
+    /** Main gameplay loop */
     private void playGame() {
-        CombatTeam team = new CombatTeam();
+        CombatTeam team   = new CombatTeam();
         EnemyTeam enemies = new EnemyTeam();
-        TroopNode head = buildTroopHistory(team.getTroops());
+        TroopNode history = buildTroopHistory(team.getTroops());
 
         while (!team.isDefeated() && !enemies.isDefeated()) {
             Troop player = team.nextActive();
@@ -59,20 +76,22 @@ public class GameEngine {
 
             int action = InputUtil.readInt("1=Attack  2=Defend: ", 1, 2);
             if (action == 1) {
-                int damage = player.attack(foe);
-                System.out.println("You dealt " + damage + " damage.");
+                int dmg = player.attack(foe);
+                System.out.println("You dealt " + dmg + " damage.");
             } else {
                 player.defend();
                 System.out.println("You brace for the next assault.");
             }
 
             if (foe.isAlive()) {
-                int damage = foe.attack(player);
-                System.out.println("Enemy dealt " + damage + " damage.");
+                int dmg = foe.attack(player);
+                System.out.println("Enemy dealt " + dmg + " damage.");
             }
-            head = head.add(player);  // recursive history
+            history = history.add(player);
 
-            if (team.isDefeated() || enemies.isDefeated()) break;
+            if (team.isDefeated() || enemies.isDefeated()) {
+                break;
+            }
         }
 
         String result = enemies.isDefeated() ? "Victory!" : "Defeat...";
@@ -80,7 +99,7 @@ public class GameEngine {
         pastScores.add(team.calculateScore());
     }
 
-    /** Builds a simple recursive history of troop actions. */
+    /** Builds a recursive history of all troops. */
     private TroopNode buildTroopHistory(List<Troop> troops) {
         TroopNode root = new TroopNode(null, null);
         for (Troop t : troops) {
@@ -91,24 +110,26 @@ public class GameEngine {
 
     /** Loads scores from disk. */
     private void loadScores() {
-        File f = new File(SCORE_FILE);
-        if (!f.exists()) return;
-        try (BufferedReader r = new BufferedReader(new FileReader(f))) {
+        File file = new File(SCORE_FILE);
+        if (!file.exists()) return;
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
-            while ((line = r.readLine()) != null) {
+            while ((line = reader.readLine()) != null) {
                 pastScores.add(Integer.parseInt(line));
             }
         } catch (IOException | NumberFormatException e) {
-            // NOTE: you may want to log or handle more gracefully
+            // handle or log as needed
         }
     }
 
     /** Saves scores to disk on exit. */
     private void saveScores() {
-        try (PrintWriter pw = new PrintWriter(new FileWriter(SCORE_FILE))) {
-            for (int s : pastScores) pw.println(s);
+        try (PrintWriter writer = new PrintWriter(new FileWriter(SCORE_FILE))) {
+            for (int score : pastScores) {
+                writer.println(score);
+            }
         } catch (IOException e) {
-            // NOTE: you may want to log or notify user
+            // handle or log as needed
         }
     }
 }

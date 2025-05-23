@@ -45,7 +45,7 @@ class ConsoleUITest {
 
     @Test
     void displayTutorialListsSteps() {
-        ui.displayTutorial(List.of("Step1", "Step2"));
+        ui.showTutorialMenu(List.of("Step1", "Step2"));
         String text = outContent.toString();
         assertTrue(text.contains("Step1"));
         assertTrue(text.contains("Step2"));

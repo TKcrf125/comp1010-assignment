@@ -1,19 +1,17 @@
 # Army Land Combat
 
-<!-- NOTE: Rephrase this title and introduction in your own style before submission -->
+A warfare simulator, test your Tatics!!
 
 ## 1. Problem Statement
 
-<!-- NOTE: Describe the game objectives in your own words to avoid direct AI-generated phrasing -->
-
-Simulate a turn‑based combat scenario where the player commands a small military squad against an opposing force. Each turn, the player chooses to Attack or Defend; the game maintains a record of past performances, provides an introductory tutorial, and logs action history recursively.
+The aim of this project was to put a military spin on a turn based combat game while also hitting the projects assessment constraints and objectives 
 
 ## 2. Project Structure
 
 <!-- NOTE: Adapt directory names or descriptions if you reorganize folders locally -->
 
 ```
-majorAssignmentTopic1/
+Army /
 ├── pom.xml                      # Maven configuration file
 ├── README.md                    # Project documentation (this file)
 ├── RESPONSIBILITIES.md          # Team contribution breakdown (fill in and sign)

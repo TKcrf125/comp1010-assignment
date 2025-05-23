@@ -12,7 +12,7 @@ package "combat.engine" {
     -ui: ConsoleUI
     -pastScores: List<Integer>
     -SCORE_FILE: String
-    +GameEngine(ui: ConsoleUI)
+    +GameEngine(ui: ConsoleUI) 
     +start(): void
     -playGame(): void
     -showTutorial(): void

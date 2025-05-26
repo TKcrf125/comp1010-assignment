@@ -54,7 +54,8 @@ note: If you want the red to go away then click on each test and file but the ga
 * **Tutorial menu**: provides the three steps for playing the game 
 * **Past‑Scores menu**: View scores in `scores.txt`
 * **Action history**: Recursive log of unit actions via `TroopNode`
-* **critical hits**: The chance that a unit will deal critical dammage acording to their crit chance 
+* **critical hits**: The chance that a unit will deal critical dammage acording to their crit chance
+* **special Ability**: Each unit has a specific special ability  
 
 ## 5. Task Allocation
 

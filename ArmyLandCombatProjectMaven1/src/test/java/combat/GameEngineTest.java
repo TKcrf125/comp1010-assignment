@@ -1,26 +1,22 @@
 package combat;
 
 import combat.engine.GameEngine;
+import combat.domain.Ability;
 import combat.domain.Troop;
 import combat.domain.TroopNode;
 import combat.ui.ConsoleUI;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
-import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.nio.file.*;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Tests for GameEngine functionality.
+ * Tests for GameEngine core logic.
  */
-// NOTE: AI-generated—please rephrase header and messages.
 class GameEngineTest {
 
     private static final String SCORE_FILE = "scores.txt";
@@ -38,32 +34,32 @@ class GameEngineTest {
     }
 
     @Test
-    void buildTroopHistoryViaReflection() throws Exception {
+    void buildTroopHistoryCreatesLinkedList() throws Exception {
         Method m = GameEngine.class.getDeclaredMethod("buildTroopHistory", List.class);
         m.setAccessible(true);
-        Troop t1 = new Troop("A", 5, 2, 1);
-        Troop t2 = new Troop("B", 6, 3, 1);
+        Troop t1 = new Troop("A", 5, 2, 1, 0, 1.0, new Ability("None","",0));
+        Troop t2 = new Troop("B", 6, 3, 1, 0, 1.0, new Ability("None","",0));
         TroopNode head = (TroopNode) m.invoke(engine, List.of(t1, t2));
-        assertEquals(t2, head.getData(), "First in chain should be t2");
-        assertEquals(t1, head.getNext().getData(), "Second should be t1");
+        assertEquals(t2, head.getData());
+        assertEquals(t1, head.getNext().getData());
     }
 
     @Test
-    void loadScoresEmptyWhenNoFile() throws Exception {
+    void loadScoresStartsEmptyWhenNoFile() throws Exception {
         Field f = GameEngine.class.getDeclaredField("pastScores");
         f.setAccessible(true);
         @SuppressWarnings("unchecked")
         List<Integer> scores = (List<Integer>) f.get(engine);
-        assertTrue(scores.isEmpty(), "pastScores should be empty without file");
+        assertTrue(scores.isEmpty());
     }
 
     @Test
-    void saveAndLoadScores() throws Exception {
+    void saveAndLoadScoresPersistData() throws Exception {
         Field f = GameEngine.class.getDeclaredField("pastScores");
         f.setAccessible(true);
         @SuppressWarnings("unchecked")
         List<Integer> scores = (List<Integer>) f.get(engine);
-        scores.addAll(List.of(10, 20, 30));
+        scores.addAll(List.of(7, 8, 9));
 
         Method save = GameEngine.class.getDeclaredMethod("saveScores");
         save.setAccessible(true);
@@ -75,6 +71,6 @@ class GameEngineTest {
         @SuppressWarnings("unchecked")
         List<Integer> loaded = (List<Integer>) f2.get(fresh);
 
-        assertEquals(List.of(10, 20, 30), loaded, "Loaded scores must match saved ones");
+        assertEquals(List.of(7, 8, 9), loaded);
     }
 }

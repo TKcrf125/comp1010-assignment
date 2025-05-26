@@ -1,3 +1,4 @@
+// File: src/main/java/combat/engine/GameEngine.java
 package combat.engine;
 
 import combat.domain.CombatTeam;
@@ -5,8 +6,6 @@ import combat.domain.EnemyTeam;
 import combat.domain.Troop;
 import combat.domain.TroopNode;
 import combat.ui.ConsoleUI;
-import combat.util.InputUtil;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +23,6 @@ public class GameEngine {
         loadScores();
     }
 
-    /** Starts the main loop. */
     public void start() {
         while (true) {
             ui.showMainMenu();
@@ -45,12 +43,11 @@ public class GameEngine {
         }
     }
 
-    /** Interactive tutorial: choose a step or go back. */
     private void showTutorial() {
         List<String> steps = List.of(
-            "Step 1: Select your unit and enter the battlefield.",
-            "Step 2: Each turn, choose 'Attack' to damage the enemy or 'Defend' to brace.",
-            "Step 3: Reduce all enemy unit health to zero to win."
+            "Step 1: select play ",
+            "Step 2: Each turn, choose 'Attack', 'Defend', or Special Ability .",
+            "Step 3: Defeat all enemies to win."
         );
         while (true) {
             ui.showTutorialMenu(steps);
@@ -63,35 +60,42 @@ public class GameEngine {
         }
     }
 
-    /** Main gameplay loop */
     private void playGame() {
-        CombatTeam team   = new CombatTeam();
+        CombatTeam team = new CombatTeam();
         EnemyTeam enemies = new EnemyTeam();
         TroopNode history = buildTroopHistory(team.getTroops());
 
         while (!team.isDefeated() && !enemies.isDefeated()) {
             Troop player = team.nextActive();
-            Troop foe    = enemies.nextActive();
+            Troop foe = enemies.nextActive();
             ui.showBattleStatus(player, foe);
 
-            int action = InputUtil.readInt("1=Attack  2=Defend: ", 1, 2);
-            if (action == 1) {
+            boolean canUse = player.getAbility().isReady();
+            ui.showBattleOptions(canUse);
+            int maxOp = canUse ? 3 : 2;
+            int choice = ui.promptBattleAction(maxOp);
+
+            if (choice == 1) {
                 int dmg = player.attack(foe);
                 System.out.println("You dealt " + dmg + " damage.");
-            } else {
+            } else if (choice == 2) {
                 player.defend();
                 System.out.println("You brace for the next assault.");
+            } else {
+                String result = player.useAbility(foe);
+                System.out.println(result);
             }
 
             if (foe.isAlive()) {
                 int dmg = foe.attack(player);
                 System.out.println("Enemy dealt " + dmg + " damage.");
             }
+
             history = history.add(player);
 
-            if (team.isDefeated() || enemies.isDefeated()) {
-                break;
-            }
+            // Tick down cooldowns
+            team.getTroops().forEach(Troop::tickAbility);
+            enemies.getTroops().forEach(Troop::tickAbility);
         }
 
         String result = enemies.isDefeated() ? "Victory!" : "Defeat...";
@@ -99,7 +103,6 @@ public class GameEngine {
         pastScores.add(team.calculateScore());
     }
 
-    /** Builds a recursive history of all troops. */
     private TroopNode buildTroopHistory(List<Troop> troops) {
         TroopNode root = new TroopNode(null, null);
         for (Troop t : troops) {
@@ -108,7 +111,6 @@ public class GameEngine {
         return root;
     }
 
-    /** Loads scores from disk. */
     private void loadScores() {
         File file = new File(SCORE_FILE);
         if (!file.exists()) return;
@@ -122,7 +124,6 @@ public class GameEngine {
         }
     }
 
-    /** Saves scores to disk on exit. */
     private void saveScores() {
         try (PrintWriter writer = new PrintWriter(new FileWriter(SCORE_FILE))) {
             for (int score : pastScores) {
@@ -133,3 +134,6 @@ public class GameEngine {
         }
     }
 }
+
+
+

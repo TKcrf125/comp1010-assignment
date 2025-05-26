@@ -1,3 +1,4 @@
+// File: src/main/java/combat/ui/ConsoleUI.java
 package combat.ui;
 
 import combat.util.InputUtil;
@@ -10,7 +11,6 @@ import java.util.List;
  */
 public class ConsoleUI {
 
-    /** Main menu display */
     public void showMainMenu() {
         System.out.println("=== Army Land Combat ===");
         System.out.println("1. Play");
@@ -19,32 +19,10 @@ public class ConsoleUI {
         System.out.println("0. Exit");
     }
 
-    /** Prompt for main menu choice */
     public int promptMenuChoice() {
         return InputUtil.readInt("Enter choice (0–3): ", 0, 3);
     }
 
-    /** Displays the tutorial submenu */
-    public void showTutorialMenu(List<String> steps) {
-        System.out.println("\n--- Tutorial ---");
-        for (int i = 0; i < steps.size(); i++) {
-            System.out.printf("%d. %s%n", i + 1, steps.get(i));
-        }
-        System.out.println("0. Back");
-    }
-
-    /** Prompt for tutorial choice */
-    public int promptTutorialChoice(int maxOption) {
-        return InputUtil.readInt("Select tutorial step (0–" + maxOption + "): ", 0, maxOption);
-    }
-
-    /** Displays a single tutorial step */
-    public void displayTutorialStep(String step) {
-        System.out.println("\n" + step);
-        InputUtil.waitForEnter();
-    }
-
-    /** Displays past scores */
     public void displayScores(List<Integer> scores) {
         System.out.println("\n--- Past Scores ---");
         if (scores.isEmpty()) {
@@ -57,13 +35,41 @@ public class ConsoleUI {
         InputUtil.waitForEnter();
     }
 
-    /** Displays the current battle status */
-    public void showBattleStatus(Troop active, Troop enemy) {
-        System.out.printf("%nYou: %s  |  Enemy: %s%n",
-            active.getStatus(), enemy.getStatus());
+    public void showTutorialMenu(List<String> steps) {
+        System.out.println("\n--- Tutorial ---");
+        for (int i = 0; i < steps.size(); i++) {
+            System.out.printf("%d. %s%n", i + 1, steps.get(i));
+        }
+        System.out.println("0. Back");
     }
 
-    /** Displays the final winner message */
+    public int promptTutorialChoice(int maxOption) {
+        return InputUtil.readInt("Select tutorial step (0–" + maxOption + "): ", 0, maxOption);
+    }
+
+    public void displayTutorialStep(String step) {
+        System.out.println("\n" + step);
+        InputUtil.waitForEnter();
+    }
+
+    public void showBattleStatus(Troop active, Troop enemy) {
+        System.out.printf("%nYou: %s  |  Enemy: %s%n",
+            active.toString(), enemy.toString());
+    }
+
+    public void showBattleOptions(boolean canUseAbility) {
+        System.out.println("\nChoose your action:");
+        System.out.println("1. Attack");
+        System.out.println("2. Defend");
+        if (canUseAbility) {
+            System.out.println("3. Use Special Ability");
+        }
+    }
+
+    public int promptBattleAction(int maxOption) {
+        return InputUtil.readInt("Enter choice (1–" + maxOption + "): ", 1, maxOption);
+    }
+
     public void showWinner(String message) {
         System.out.println("\n" + message);
         InputUtil.waitForEnter();

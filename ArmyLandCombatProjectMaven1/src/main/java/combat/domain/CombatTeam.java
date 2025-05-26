@@ -1,20 +1,32 @@
+// File: src/main/java/combat/domain/CombatTeam.java
 package combat.domain;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A team of player-controlled combat units.
+ * Player squad of Troop instances.
  */
-// NOTE: AI-generated—please rephrase and expand on choice logic.
 public class CombatTeam {
     private final List<Troop> troops = new ArrayList<>();
     private int currentIndex = 0;
 
     public CombatTeam() {
-        troops.add(new Troop("Infantry Squad", 60, 20, 10));
-        troops.add(new Troop("Armored Platoon", 80, 30, 20));
-        troops.add(new Troop("Artillery Battery", 50, 40, 5));
+        troops.add(new Troop(
+            "Infantry Squad", 60, 20, 10,
+            0.10, 2.0,                     // NOTE: 10% crit, 2× multiplier
+            new Ability("First Aid", "Heal 20 HP", 3)
+        ));
+        troops.add(new Troop(
+            "Armored Platoon", 80, 30, 20,
+            0.05, 2.5,                     // NOTE: 5% crit, 2.5× multiplier
+            new Ability("Shield Wall", "Boost defense next turn", 2)
+        ));
+        troops.add(new Troop(
+            "Artillery Battery", 50, 40, 5,
+            0.15, 1.8,                     // NOTE: 15% crit, 1.8× multiplier
+            new Ability("Barrage", "Damage all enemies", 4)
+        ));
     }
 
     public Troop nextActive() {
@@ -29,10 +41,15 @@ public class CombatTeam {
     }
 
     public List<Troop> getTroops() {
-        return List.copyOf(troops);
+        return List.copyOf(troops);      // NOTE: Return immutable copy
     }
 
     public int calculateScore() {
-        return troops.stream().mapToInt(Troop::calculateScore).sum();
+        return troops.stream()
+                     .mapToInt(t -> t.getAttackPower() 
+                                + t.getDefencePower() 
+                                + t.toString().length())
+                     .sum();                    // NOTE: Example scoring formula
     }
 }
+

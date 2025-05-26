@@ -1,20 +1,32 @@
+// File: src/main/java/combat/domain/EnemyTeam.java
 package combat.domain;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A team of opposing combat units.
+ * Opposing squad of Troop instances.
  */
-// NOTE: AI-generated—please rephrase and add variety.
 public class EnemyTeam {
     private final List<Troop> troops = new ArrayList<>();
     private int currentIndex = 0;
 
     public EnemyTeam() {
-        troops.add(new Troop("Infantry Unit", 55, 18, 8));
-        troops.add(new Troop("Armored Division", 90, 35, 25));
-        troops.add(new Troop("Artillery Regiment", 45, 45, 5));
+        troops.add(new Troop(
+            "Enemy Infantry", 55, 18, 8,
+            0.08, 2.0,                     // NOTE: 8% crit
+            new Ability("None", "No ability", 0)
+        ));
+        troops.add(new Troop(
+            "Enemy Armor", 90, 35, 25,
+            0.05, 2.2,
+            new Ability("None", "No ability", 0)
+        ));
+        troops.add(new Troop(
+            "Enemy Artillery", 45, 45, 5,
+            0.12, 1.7,
+            new Ability("None", "No ability", 0)
+        ));
     }
 
     public Troop nextActive() {
@@ -26,5 +38,9 @@ public class EnemyTeam {
 
     public boolean isDefeated() {
         return troops.stream().noneMatch(Troop::isAlive);
+    }
+
+    public List<Troop> getTroops() {
+        return List.copyOf(troops);
     }
 }

@@ -51,26 +51,65 @@ note: If you want the red to go away then click on each test and file but the ga
 ## 4. Features
 
 * **Turn‑based combat**: pressing 1 for attack or 2 for defending in each round. 
-* **Tutorial menu**: provides the three steps for playing the game 
-* **Past‑Scores menu**: View scores in `scores.txt`
-* **Action history**: Recursive log of unit actions via `TroopNode`
-* **critical hits**: The chance that a unit will deal critical dammage acording to their crit chance
-* **special Ability**: Each unit has a specific special ability  
+* **Tutorial menu**: provides the three steps for playing the game.
+* **Past‑Scores menu**: View scores in `scores.txt`.
+* **Action history**: Recursive log of unit actions via `TroopNode`.
+* **critical hits**: The chance that a unit will deal critical dammage acording to their crit chance.
+* **special Ability**: Each unit has a specific special ability all special abilities have a cooldown. 
 
 ## 5. Task Allocation
 
-<!-- NOTE: Replace placeholders with actual team member names and details -->
-
 | Team Member   | Contribution                                                 |
 | ------------- | ------------------------------------------------------------ |
-| **\<Tom Kilburn>** |  |
-| **\<Name 2>** |  |
+| **\<Tom Kilburn>** |  Establish turn-based sequence (attack/defend choices each round)
+. Specify win/loss conditions (all enemy units defeated vs. player squad wiped out)
+. Design units & stats
+. Choose unit types (Infantry, Armored Platoon, Artillery, etc.)
+. Set health, attackPower, defencePower for each
+. Balance strengths/weaknesses so no one unit dominates
+. Craft the tutorial flow
+. Write the step-by-step “Tutorial” menu content
+. Decide what tips/hints to show and in what order
+. Lay out the UI
+. write menu structure and prompts
+. write the scoring system
+. Choose formula for “score” (e.g. sum of remaining health + stats)
+. Decide how and when to record scores to scores.txt
+. Create the recursive history feature
+. Decide what events to record in the TroopNode chain (e.g. each action taken)
+. Determine how deep/value of history for post-game analysis
+. design and implement files format
+. Define the plain-text format of scores.txt (one number per line)
+. Make the UML class diagram
+. Map game concepts (engine, UI, domain) to classes & relationships
+. Choose packages and package names
+. Develop method-analysis write-up
+. creating the game loop 
+. Work with the Test Designer to ensure those scenarios are covered |
+| **\<Asmi Jambhale>** | • Role: Editor and Test Designer 
+Tasks: 
+• Refactor and reorganise code into packages (engine, ui, domain, util)
+• Standardise indentation (4-spaces) and brace style across all .java files
+• Rename variables and methods for clarity 
+• Extract helper methods to improve delegation 
+• Add and update Javadoc on every public class and method
+• Ensure all imports are correct 
+• Verify Maven pom.xml is configured properly 
+• Merge all branches and resolve conflicts, commit final code structure
+Domain classes 
+Engine features (GameEngine.buildTroopHistory(), file I/O, win/lose paths)
+• Write and review test cases for normal and out of pocket scenarios (empty lists, invalid input loops, all-dead teams)
+• Implement test classes: EnemyTeamTest, TroopNodeTest, InputUtilTest, ConsoleUITest, GameEngineTest
+• Configure Maven Surefire plugin to run tests automatically with mvn test
+• Ensure tests pass offline
+• Measure basic coverage and add any missing critical paths
+• Document in README the existence of unit tests and how to run them |
 
 ## 6. UML Class Diagram
 
-<!-- NOTE: Replace placeholder with your generated PDF diagram -->
+![Class Diagram](docs/ArmyLandCombatUML.png)
 
-![Class Diagram](docs/ArmyLandCombat_UML.pum)
+(Also see [PDF version](docs/ArmyLandCombatUML.pdf) for full-size detail.)
 
 ## 7. Method Analysis
 

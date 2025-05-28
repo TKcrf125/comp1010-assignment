@@ -1,4 +1,4 @@
-package combat.domain;
+package majorAssignmentTopic1.src.main.java.combat.domain;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -86,8 +86,7 @@ note: If you want the red to go away then click on each test and file but the ga
 . Develop method-analysis write-up
 . creating the game loop 
 . Work with the Test Designer to ensure those scenarios are covered |
-| **\<Asmi Jambhale>** | • Role: Editor and Test Designer 
-Tasks: 
+| **\<Asmi Jambhale>** | 
 • Refactor and reorganise code into packages (engine, ui, domain, util)
 • Standardise indentation (4-spaces) and brace style across all .java files
 • Rename variables and methods for clarity 
@@ -103,7 +102,7 @@ Engine features (GameEngine.buildTroopHistory(), file I/O, win/lose paths)
 • Configure Maven Surefire plugin to run tests automatically with mvn test
 • Ensure tests pass offline
 • Measure basic coverage and add any missing critical paths
-• Document in README the existence of unit tests and how to run them |
+• Document in README the existence of unit tests and how to run them 
 
 ## 6. UML Class Diagram
 

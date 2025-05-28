@@ -1,4 +1,4 @@
-package combat;
+package majorAssignmentTopic1.src.test.java.combat;
 
 import combat.util.InputUtil;
 import org.junit.jupiter.api.AfterEach;

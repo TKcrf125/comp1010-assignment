@@ -114,38 +114,61 @@ Engine features (GameEngine.buildTroopHistory(), file I/O, win/lose paths)
 ## 7. Method Analysis
 
 ### `GameEngine.playGame()`
-
-<!-- NOTE: Write this in your own style, explaining logic and alternatives -->
-
-* **Role**: Manages game loop—selects active units, prompts user actions, resolves combat outcomes, updates history, and persists scores.
-* **Alternative**: Could use an event-driven observer pattern to decouple logic and UI.
-* **Complexity**: Executes in O(n) time per turn; uses O(t) extra memory for action history of length t.
+- **Purpose & Flow**  
+  - Orchestrates the main turn-based loop:  
+    1. Fetch next active `Troop` from player and enemy teams  
+    2. Display status and prompt for Attack/Defend/Use Ability  
+    3. Resolve player action (including critical hits or ability effects)  
+    4. Resolve enemy counter-attack if still alive  
+    5. Record action in the recursive `TroopNode` history  
+    6. Repeat until one side is defeated, then show result and record score  
+- **Alternative Designs**  
+  - Could use an event-driven or state-machine pattern to decouple UI, logic and history  
+  - Could split player/enemy turns into separate handler classes for cleaner SRP  
+- **Complexity**  
+  - Time: O(n) per turn (n = number of troops alive)  
+  - Space: O(t) for action history (t = total actions recorded)
 
 ### `Troop.attack(Troop other)`
+- **What It Does**  
+  - Computes base damage = `max(0, attackPower – other.defencePower)`  
+  - Rolls a random chance against `critChance`; if successful, multiplies damage by `critMultiplier` and prints a “Critical hit!” message  
+  - Applies final damage via `other.takeDamage(damage)` and returns the damage dealt  
+- **Alternative Designs**  
+  - Could separate “damage calculation” and “hit determination” into distinct methods for testability  
+  - Could introduce probability curves or hit/miss rolls for more nuanced combat  
+- **Complexity**  
+  - O(1) time and space (constant-time computation and no additional memory)
 
-<!-- NOTE: Rephrase this damage calculation description -->
-
-* **Implementation**: Calculates damage as `max(0, attackPower − other.defencePower)` and applies it to the target.
-* **Alternative**: Introduce randomness or hit‑chance probabilities for more realism.
-* **Performance**: Constant time and space (O(1)).
-
-## 8. Scope Requirements
-
-<!-- NOTE: Ensure this matches your code comments and evidence -->
-
-1. **Object Containment**
-   `TroopNode` directly references a `Troop` instance (not in a collection).
-
-2. **ArrayList Usage**
-   `CombatTeam` and `EnemyTeam` store their troops in `List<Troop>` backed by `ArrayList`.
-
-3. **Recursive Data Structure**
-   `TroopNode` forms a singly linked list; constructed in `GameEngine.buildTroopHistory()`.
-
-4. **File I/O**
-   Reads from and writes to `scores.txt` in the project root to save high scores.
+### `Ability.apply(Troop user, Troop target)`  
+- **Function**  
+  - Represents a one-off special action (e.g. “Barrage” or “First Aid”)  
+  - In the example, doubles base damage or heals, applies effect to `target`, and returns a descriptive result string  
+- **Alternative Designs**  
+  - Could use a strategy pattern with subclassed `Ability` implementations for each unique effect  
+  - Could parameterize effects (damage, heal, buff) in data rather than code for easier balance tweaks  
+- **Complexity**  
+  - O(1) time and space per use
 
 ---
 
-<!-- NOTE: Proofread and remove these NOTE comments, and rewrite sections in your own words before Turnitin submission -->
+## 8. Scope Requirements
+
+1. **Object Containment**  
+   - `TroopNode` holds a direct `Troop` reference (non-`List` containment) to build a recursive history.
+
+2. **ArrayList Usage**  
+   - `CombatTeam` and `EnemyTeam` each use `List<Troop>` (backed by `ArrayList`) to manage their squads.
+
+3. **Recursive Data Structure**  
+   - `TroopNode` forms a singly-linked list of unit actions and is built in `GameEngine.buildTroopHistory()`.
+
+4. **File I/O**  
+   - The game reads from and writes to a plain-text `scores.txt` in the project root to persist past scores.
+
+5. **Ability Containment**  
+   - Each `Troop` holds an `Ability` object (non-`List` containment), satisfying an additional user-defined reference requirement.
+
+6. **Critical Hit Logic**  
+   - `Troop.attack()` includes probabilistic behavior (`critChance`, `critMultiplier`), demonstrating conditional flow and RNG usage.
 

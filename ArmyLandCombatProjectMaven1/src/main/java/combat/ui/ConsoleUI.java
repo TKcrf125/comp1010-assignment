@@ -1,4 +1,3 @@
-// File: src/main/java/combat/ui/ConsoleUI.java
 package combat.ui;
 
 import combat.util.InputUtil;
@@ -7,7 +6,7 @@ import combat.domain.Troop;
 import java.util.List;
 
 /**
- * Handles all console printing and menus.
+ * Handles all console printing and menus. AKA the User Interface 
  */
 public class ConsoleUI {
 

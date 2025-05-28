@@ -1,11 +1,10 @@
-// File: src/main/java/combat/domain/EnemyTeam.java
 package combat.domain;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Opposing squad of Troop instances.
+ * the enemy's troops .
  */
 public class EnemyTeam {
     private final List<Troop> troops = new ArrayList<>();
@@ -14,17 +13,17 @@ public class EnemyTeam {
     public EnemyTeam() {
         troops.add(new Troop(
             "Enemy Infantry", 55, 18, 8,
-            0.08, 2.0,                     // NOTE: 8% crit
+            0.08, 2.0,                     // 8% crit
             new Ability("None", "No ability", 0)
         ));
         troops.add(new Troop(
             "Enemy Armor", 90, 35, 25,
-            0.05, 2.2,
+            0.05, 2.2,                    //5% ctit
             new Ability("None", "No ability", 0)
         ));
         troops.add(new Troop(
             "Enemy Artillery", 45, 45, 5,
-            0.12, 1.7,
+            0.12, 1.7,                  //12% crit (artilery goated)
             new Ability("None", "No ability", 0)
         ));
     }

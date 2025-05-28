@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Unit tests for CombatTeam.
  */
-// NOTE: AI-generated—add more scenarios (all dead, rotate order, etc.).
 public class CombatTeamTest {
     @Test
     void testTeamInitialization() {

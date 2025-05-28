@@ -1,10 +1,9 @@
-// File: src/main/java/combat/domain/Troop.java
 package combat.domain;
 
 import java.util.Random;
 
 /**
- * Represents a combat unit with health, stats, crits, and an ability.
+ * a combat unit's health, stats, crits, and an ability.
  */
 public class Troop {
     private final String name;
@@ -52,7 +51,7 @@ public class Troop {
         this.health = Math.max(0, health - dmg);
     }
 
-    /** Perform a normal attack with a chance for a critical hit. */
+    /** attack with a chance for a critical hit. */
     public int attack(Troop other) {
         int base = Math.max(0, attackPower - other.defencePower);
         boolean isCrit = rng.nextDouble() < critChance;
@@ -66,7 +65,7 @@ public class Troop {
         return damage;
     }
 
-    /** Simple defend action: restore some health. */
+    /** defending */
     public void defend() {
         this.health += defencePower / 2;
     }
@@ -75,7 +74,7 @@ public class Troop {
         return ability;
     }
 
-    /** Use special ability on a target, if ready. */
+    /** Use special ability */
     public String useAbility(Troop target) {
         if (!ability.isReady()) {
             return ability.getName() + " is not ready.";
@@ -84,7 +83,7 @@ public class Troop {
         return ability.apply(this, target);
     }
 
-    /** Decrement the ability cooldown by one turn. */
+    /** ability cooldown */
     public void tickAbility() {
         ability.tick();
     }

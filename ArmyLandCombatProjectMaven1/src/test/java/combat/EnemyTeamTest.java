@@ -12,8 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Tests for EnemyTeam behavior.
- */
-// NOTE: AI-generated—please rephrase header and messages.
+*/
 class EnemyTeamTest {
 
     private EnemyTeam enemies;

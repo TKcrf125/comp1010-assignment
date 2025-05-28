@@ -3,14 +3,13 @@ package combat.util;
 import java.util.Scanner;
 
 /**
- * Utility for reading console input.
+ * all about reading what the player does.
  */
-// NOTE: AI-generated utility class—consider rewriting descriptions.
 public class InputUtil {
     private static final Scanner scanner = new Scanner(System.in);
 
     /**
-     * Reads an integer from the user between min and max (inclusive).
+     * Reads an integer from the user 
      */
     public static int readInt(String prompt, int min, int max) {
         int value;
@@ -22,12 +21,12 @@ public class InputUtil {
             }
             value = scanner.nextInt();
         } while (value < min || value > max);
-        scanner.nextLine(); // consume newline
+        scanner.nextLine(); // consume newline (idk why but this took me ages to get rid of the double console stuff)
         return value;
     }
 
     /**
-     * Pauses until the user presses Enter.
+     *user presses Enter to continue 
      */
     public static void waitForEnter() {
         System.out.print("Press Enter to continue...");

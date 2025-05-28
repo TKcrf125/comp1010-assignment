@@ -12,7 +12,6 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Tests for InputUtil.
  */
-// NOTE: AI-generated—please rephrase header and messages.
 class InputUtilTest {
 
     private final InputStream originalIn = System.in;

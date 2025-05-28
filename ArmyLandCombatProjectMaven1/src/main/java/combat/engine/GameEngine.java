@@ -1,4 +1,3 @@
-// File: src/main/java/combat/engine/GameEngine.java
 package combat.engine;
 
 import combat.domain.CombatTeam;
@@ -11,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Core game logic and flow control.
+ * Core game
  */
 public class GameEngine {
     private final ConsoleUI ui;
@@ -93,7 +92,7 @@ public class GameEngine {
 
             history = history.add(player);
 
-            // Tick down cooldowns
+            // Ticks //
             team.getTroops().forEach(Troop::tickAbility);
             enemies.getTroops().forEach(Troop::tickAbility);
         }
@@ -120,7 +119,7 @@ public class GameEngine {
                 pastScores.add(Integer.parseInt(line));
             }
         } catch (IOException | NumberFormatException e) {
-            // handle or log as needed
+            // loads the scores 
         }
     }
 

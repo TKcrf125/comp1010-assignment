@@ -1,8 +1,7 @@
-// File: src/main/java/combat/domain/Ability.java
 package combat.domain;
 
 /**
- * Represents a special action a unit can perform, with a cooldown.
+ * this bit of code is all about each units special abilitiy and their cooldown.
  */
 public class Ability {
     private final String name;
@@ -36,7 +35,7 @@ public class Ability {
         }
     }
 
-    /** Execute the ability’s effect and return a descriptive message. */
+    /** Execute the ability and give player message. */
     public String apply(Troop user, Troop target) {
         int base = Math.max(0, user.getAttackPower() - target.getDefencePower());
         int damage = base * 2;

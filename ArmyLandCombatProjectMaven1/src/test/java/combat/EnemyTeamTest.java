@@ -1,4 +1,4 @@
-package majorAssignmentTopic1.src.test.java.combat;
+package combat;
 
 import combat.domain.EnemyTeam;
 import combat.domain.Troop;

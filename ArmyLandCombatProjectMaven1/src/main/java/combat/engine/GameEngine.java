@@ -1,4 +1,4 @@
-package majorAssignmentTopic1.src.main.java.combat.engine;
+package combat.engine;
 
 import combat.domain.CombatTeam;
 import combat.domain.EnemyTeam;

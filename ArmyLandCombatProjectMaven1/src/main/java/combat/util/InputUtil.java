@@ -1,4 +1,4 @@
-package majorAssignmentTopic1.src.main.java.combat.util;
+package combat.util;
 
 import java.util.Scanner;
 

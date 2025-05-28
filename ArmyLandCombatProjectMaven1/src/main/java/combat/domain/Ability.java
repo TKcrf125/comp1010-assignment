@@ -1,4 +1,4 @@
-package majorAssignmentTopic1.src.main.java.combat.domain;
+package combat.domain;
 
 /**
  * this bit of code is all about each units special abilitiy and their cooldown.

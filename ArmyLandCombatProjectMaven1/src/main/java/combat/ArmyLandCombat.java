@@ -1,4 +1,4 @@
-package majorAssignmentTopic1.src.main.java.combat;
+package combat;
 
 import combat.engine.GameEngine;
 import combat.ui.ConsoleUI;

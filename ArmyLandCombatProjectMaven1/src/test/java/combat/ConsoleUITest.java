@@ -1,4 +1,4 @@
-package majorAssignmentTopic1.src.test.java.combat;
+package combat;
 
 import combat.ui.ConsoleUI;
 import combat.domain.Troop;

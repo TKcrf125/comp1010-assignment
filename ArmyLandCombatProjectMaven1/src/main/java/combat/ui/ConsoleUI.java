@@ -1,4 +1,4 @@
-package majorAssignmentTopic1.src.main.java.combat.ui;
+package combat.ui;
 
 import combat.util.InputUtil;
 import combat.domain.Troop;
